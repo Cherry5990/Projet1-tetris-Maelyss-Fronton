@@ -31,7 +31,7 @@ TAILLE_BLOC = 20, 20
 TAILLE_PLATEAU = tuple([DIM_PLATEAU[i]*TAILLE_BLOC[i] for i in range(2)])
 TAILLE_PLABORD = tuple([DIM_PLATEAU[i]*TAILLE_BLOC[i]+BORDURE_PLATEAU*2 for i in range(2)])
 
-MARGE = tuple([TAILLE_FENETRE[i]-TAILLE_PLATEAU[i]- BORDURE_PLATEAU*2 for i in range(2)])
+MARGE = tuple([TAILLE_FENETRE[i]-TAILLE_PLATEAU[i]-BORDURE_PLATEAU*2 for i in range(2)])
 START_PLATEAU = int(MARGE[0]/2), MARGE[1]+2*BORDURE_PLATEAU
 START_PLABORD = int(MARGE[0]/2)-BORDURE_PLATEAU, MARGE[1]+BORDURE_PLATEAU
 
@@ -43,7 +43,7 @@ POSITION_LIGNES = POSITION_SCORE[0], 180
 POSITION_TETRIS = POSITION_SCORE[0], 210
 POSITION_NIVEAU = POSITION_SCORE[0], 240
 
-PIECES = {
+PIECES = { # Dictionnaire stockant les représentations les 7 pièces possibles 
 	'O': [
 		'0000\n0110\n0110\n0000',
 	],
@@ -124,11 +124,12 @@ class Jeu:
 	def _afficherTexte(self, text, position, couleur=9, font='defaut'):
 #		print("Afficher Texte")
 		font = self.fonts.get(font, self.fonts['defaut'])
-		couleur=COULEURS.get(couleur, COULEURS[9])
+		couleur=COULEURS.get(couleur, COULEURS[9]) # Renvoie la couleur n°9 par défaut si paramètre donné non valide
 		rendu = font.render(text, True, couleur)
 		rect = rendu.get_rect()
 		rect.center = position
 		self.surface.blit(rendu, rect)
+		
 	def _getEvent(self):
 		for event in pygame.event.get():
 			if event.type == QUIT:
