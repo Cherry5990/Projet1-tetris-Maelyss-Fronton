@@ -128,7 +128,7 @@ class Jeu:
         self._quitter()
 
     def _afficherTexte(self, text, position, couleur=9, font='defaut'):
-        #		print("Afficher Texte")
+        # print("Afficher Texte")
         font = self.fonts.get(font, self.fonts['defaut'])
         couleur = COULEURS.get(couleur, COULEURS[9])
         rendu = font.render(text, True, couleur)
@@ -194,23 +194,23 @@ class Jeu:
                         coords.append(
                             [i + self.position[0], j + self.position[1]])
             coordonnees = coords
-#			print("Rotation testée: %s" % coordonnees)
+			# print("Rotation testée: %s" % coordonnees)
         for cx, cy in coordonnees:
             if not 0 <= x + cx < max_x:
-                #				print("Non valide en X: cx=%s, x=%s" % (cx, x))
+                # print("Non valide en X: cx=%s, x=%s" % (cx, x))
                 return False
             elif cy < 0:
                 continue
             elif y + cy >= max_y:
-                #				print("Non valide en Y: cy=%s, y=%s" % (cy, y))
+                # print("Non valide en Y: cy=%s, y=%s" % (cy, y))
                 return False
             else:
                 if self.plateau[cy + y][cx + x] != 0:
-                    #					print("Position occupée sur le plateau")
+                    # print("Position occupée sur le plateau")
                     return False
 
 
-#		print("Position testée valide: x=%s, y=%s" % (x, y))
+		# print("Position testée valide: x=%s, y=%s" % (x, y))
         return True
 
     def _poserPiece(self):
@@ -334,7 +334,7 @@ class Jeu:
                 ])
                 pygame.draw.rect(self.surface, couleur,
                                  coordonnees + TAILLE_BLOC)
-        self.score, self.pieces, self.lignes, self.tetris, self.niveau  #TODO
+        self.score, self.pieces, self.lignes, self.tetris, self.niveau  # TODO
         self._afficherTexte('Score: >%s' % self.score, POSITION_SCORE)
         self._afficherTexte('Pièces: %s' % self.pieces, POSITION_PIECES)
         self._afficherTexte('Lignes: %s' % self.lignes, POSITION_LIGNES)
