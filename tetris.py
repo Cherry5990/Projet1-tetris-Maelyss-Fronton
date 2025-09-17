@@ -78,7 +78,7 @@ class Jeu:
 		self._attente()
 		self._quitter()
 
-	def _afficher_texte(self, text, position, couleur=9, font='defaut'):
+	def _afficher_texte(self, text:str, position:tuple, couleur:int=9, font:str='defaut'):
 #		print("Afficher Texte")
 		font = self.fonts.get(font, self.fonts['defaut'])
 		couleur=COULEURS.get(couleur, COULEURS[9])
@@ -125,7 +125,7 @@ class Jeu:
 				if pixel != 0:
 					coords.append([num_ligne+self.position[0], num_pixel+self.position[1]])
 		self.coordonnees = coords
-	def _est_valide(self, x=0, y=0, r=0):
+	def _est_valide(self, x:int=0, y:int=0, r:int=0):
 		max_x, max_y = constantes.DIM_PLATEAU
 		if r == 0: # si la pièce n'a pas été tournée
 			coordonnees = self.coordonnees
