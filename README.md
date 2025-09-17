@@ -1,6 +1,9 @@
-# But 
+# But  
+
 > Ceci est un jeu de Tetris dont nous devons nettoyer le code.
-# Mes informations
+
+## Mes informations  
+
 > - Nom : Fronton  
 > - Prénom : Maelyss  
-> - Classe : 23A
+> - Classe : 23A  
