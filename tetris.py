@@ -51,7 +51,7 @@ POSITION_NIVEAU = POSITION_SCORE[0], HAUTEUR_POSITION_TEXTE_SCORE + 120
 for name, rotations in PIECES.items():
 	PIECES[name] = [[[int(i) for i in pixel] for pixel in rotation.splitlines()] for rotation in rotations]
 
-PIECES_KEYS = list(PIECES.keys())
+PIECES_KEYS = list(PIECES.keys()) # On récupère le nom associé à chaque pièce
 
 # Classe Tetris
 class Jeu:
@@ -108,7 +108,7 @@ class Jeu:
 			font (str, optional): La font du texte. Defaults to 'defaut'.
 		"""
 		font = self.fonts.get(font, self.fonts['defaut'])
-		couleur=COULEURS.get(couleur, COULEURS[9])
+		couleur=COULEURS.get(couleur, COULEURS[9]) # Renvoie la couleur n°9 par défaut si paramètre donné non valide
 		rendu = font.render(text, True, couleur)
 		rect = rendu.get_rect()
 		rect.center = position
@@ -122,7 +122,7 @@ class Jeu:
 		for event in pygame.event.get():
 			if event.type == QUIT:
 				self._quitter()
-			if event.type == KEYUP:
+			if event.type == KEYUP: # quitte quand la touche echap est relâchée
 				if event.key == K_ESCAPE:
 					self._quitter()
 			if event.type == KEYDOWN:
