@@ -330,4 +330,3 @@ if __name__ == '__main__':
 	print("Partie terminée")
 	j.stop()
 	print("Arrêt du programme")
-
