@@ -3,7 +3,8 @@
 """
 [Ce bloc est la documentation du module]
 Un Tetris avec Pygame.
-Ce code est basee sur le code de Sébastien CHAZALLET, auteur du livre "Python 3, les fondamentaux du language"
+Ce code est basee sur le code de Sébastien CHAZALLET, auteur du livre 
+"Python 3, les fondamentaux du language"
 """
 
 __author__ = "votre nom"
@@ -14,7 +15,7 @@ __version__ = "1.0"
 __maintainer__ = "votre nom"
 __email__ = "votre email"
 
-# Probleme de l'ordre des imports
+# Probleme de l"ordre des imports
 from pygame.locals import *
 import random
 import time
@@ -52,7 +53,8 @@ POSITION_TETRIS = POSITION_SCORE[0], HAUTEUR_POSITION_TEXTE_SCORE + 90
 POSITION_NIVEAU = POSITION_SCORE[0], HAUTEUR_POSITION_TEXTE_SCORE + 120
 
 for name, rotations in PIECES.items():
-	PIECES[name] = [[[int(i) for i in pixel] for pixel in rotation.splitlines()] for rotation in rotations]
+	PIECES[name] = [[[int(i) for i in pixel] for pixel in rotation.splitlines()]
+				 	for rotation in rotations]
 
 PIECES_KEYS = list(PIECES.keys())
 
@@ -74,35 +76,36 @@ class Jeu:
 			jeu.stop()
 			print("Arrêt du programme")
 	"""
-	def __init__(self):
+
+    def __init__(self):
 		"""
 			Le constructeur de la classe Jeu
 		"""
-		pygame.init()
-		self.clock = pygame.time.Clock()
-		self.surface = pygame.display.set_mode(constantes.TAILLE_FENETRE)
-		self.fonts = {
-			'defaut': pygame.font.Font('freesansbold.ttf', TAILLE_FONT_DEFAUT),
-			'titre': pygame.font.Font('freesansbold.ttf', TAILLE_FONT_TITRE),
-		}
-		pygame.display.set_caption('Application Tetris')
+        pygame.init()
+        self.clock = pygame.time.Clock()
+        self.surface = pygame.display.set_mode(constantes.TAILLE_FENETRE)
+        self.fonts = {
+            "defaut": pygame.font.Font("freesansbold.ttf", TAILLE_FONT_DEFAUT),
+            "titre": pygame.font.Font("freesansbold.ttf", TAILLE_FONT_TITRE),
+        }
+        pygame.display.set_caption("Application Tetris")
 
-	def start(self)->None:
+    def start(self)->None:
 		"""
 			Méthode affichant l'écran d'accueil
 		"""
-		self._afficher_texte('Tetris', CENTRE_FENETRE, font = 'titre')
-		self._afficher_texte('Appuyer sur une touche...', POS)
-		self._attente()
+        self._afficher_texte("Tetris", CENTRE_FENETRE, font="titre")
+        self._afficher_texte("Appuyer sur une touche...", POS)
+        self._attente()
 
-	def stop(self)->None:
+    def stop(self)->None:
 		"""Méthode affichant le message de défaite
 		"""
-		self._afficher_texte('Perdu', CENTRE_FENETRE, font='titre')
-		self._attente()
-		self._quitter()
+        self._afficher_texte("Perdu", CENTRE_FENETRE, font="titre")
+        self._attente()
+        self._quitter()
 
-	def _afficher_texte(self, text:str, position:tuple, couleur:int=9, font:str='defaut')-> None:
+	def _afficher_texte(self, text:str, position:tuple, couleur:int=9, font:str="defaut")-> None:
 		"""Méthode permettant d'afficher le texte passé en paramètre avec la position, la couleur et la font
 
 		Args:
@@ -111,7 +114,7 @@ class Jeu:
 			couleur (int, optional): La couleur du texte. Defaults to 9.
 			font (str, optional): La font du texte. Defaults to 'defaut'.
 		"""
-		font = self.fonts.get(font, self.fonts['defaut'])
+		font = self.fonts.get(font, self.fonts["defaut"])
 		couleur = COULEURS.get(couleur, COULEURS[9]) # Renvoie la couleur n°9 par défaut si paramètre donné non valide
 		rendu = font.render(text, True, couleur)
 		rect = rendu.get_rect()
@@ -149,7 +152,7 @@ class Jeu:
 		"""Met le jeu en pause
 		"""
 		print("Attente")
-		while self._get_event() == None:
+		while self._get_event() is None:
 			self._rendre()
 	def _get_piece(self)->list[str]:
 		"""Choisit aléatoirement une pièce
@@ -172,7 +175,7 @@ class Jeu:
 	def _calculer_donnees_piece_courante(self)->None:
 		"""Calcule les coordonées de la pièce actuelle
 		"""
-		rep_piece=self.current[self.position[2]]
+		rep_piece = self.current[self.position[2]]
 		coords = []
 		for num_ligne, ligne in enumerate(rep_piece):
 			for num_pixel, pixel in enumerate(ligne):
@@ -237,7 +240,7 @@ class Jeu:
 					break
 			else:
 				print(self.plateau)
-				print(">>> %s" % (constantes.DIM_PLATEAU[1] - 1 - i))
+				print(f">>> {(constantes.DIM_PLATEAU[1] - 1 - i)}")
 				completees.append(constantes.DIM_PLATEAU[1] - 1 - i)
 		lignes = len(completees)
 		for ligne_completee in completees:
@@ -278,8 +281,8 @@ class Jeu:
 		if event == K_p:
 			print("Pause")
 			self.surface.fill(COULEURS.get(0))
-			self._afficher_texte('Pause', CENTRE_FENETRE, font='titre')
-			self._afficher_texte('Appuyer sur une touche...', POS)
+			self._afficher_texte("Pause", CENTRE_FENETRE, font="titre")
+			self._afficher_texte("Appuyer sur une touche...", POS)
 			self._attente()
 		elif event == K_LEFT:
 			print("Mouvement vers la gauche")
@@ -298,8 +301,7 @@ class Jeu:
 			if self._est_valide(r=1):
 				self.position[2] = (self.position[2] + 1) % len(self.current)
 		elif event == K_SPACE:
-			print("Mouvement de chute %s / %s" % 
-		 		(self.position, self.coordonnees))
+			print(f"Mouvement de chute {self.position} / {self.coordonnees}")
 			if self.position[1] <= 0:
 				self.position[1] = 1
 				self._calculer_donnees_piece_courante()
@@ -350,12 +352,12 @@ class Jeu:
 				])
 				pygame.draw.rect(self.surface, couleur, 
 					 			coordonnees + constantes.TAILLE_BLOC)
-		self.score, self.pieces, self.lignes, self.tetris, self.niveau		#TODO
-		self._afficher_texte('Score: >%s' % self.score, POSITION_SCORE)
-		self._afficher_texte('Pièces: %s' % self.pieces, POSITION_PIECES)
-		self._afficher_texte('Lignes: %s' % self.lignes, POSITION_LIGNES)
-		self._afficher_texte('Tetris: %s' % self.tetris, POSITION_TETRIS)
-		self._afficher_texte('Niveau: %s' % self.niveau, POSITION_NIVEAU)
+				
+		self._afficherTexte(f"Score: {self.score}", POSITION_SCORE)
+		self._afficherTexte(f"Pièces: {self.pieces}", POSITION_PIECES)
+		self._afficherTexte(f"Lignes: {self.lignes}", POSITION_LIGNES)
+		self._afficherTexte(f"Tetris: {self.tetris}", POSITION_TETRIS)
+		self._afficherTexte(f"Niveau: {self.niveau}", POSITION_NIVEAU)
 		self._rendre()
 
 	def play(self)->None:
@@ -371,13 +373,12 @@ class Jeu:
 			self._gerer_gravite()
 			self._dessiner_plateau()
 
-if __name__ == '__main__':
-	jeu = Jeu()
-	print("Jeu prêt")
-	jeu.start()
-	print("Partie démarée")
-	jeu.play()
-	print("Partie terminée")
-	jeu.stop()
-	print("Arrêt du programme")
-
+if __name__ == "__main__":
+    jeu = Jeu()
+    print("Jeu prêt")
+    jeu.start()
+    print("Partie démarée")
+    jeu.play()
+    print("Partie terminée")
+    jeu.stop()
+    print("Arrêt du programme")
