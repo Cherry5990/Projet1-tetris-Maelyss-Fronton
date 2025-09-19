@@ -395,11 +395,11 @@ class Jeu:
                 pygame.draw.rect(self.surface, couleur,
                                  coordonnees + constantes.TAILLE_BLOC)
 
-        self._afficherTexte(f"Score: {self.score}", POSITION_SCORE)
-        self._afficherTexte(f"Pièces: {self.pieces}", POSITION_PIECES)
-        self._afficherTexte(f"Lignes: {self.lignes}", POSITION_LIGNES)
-        self._afficherTexte(f"Tetris: {self.tetris}", POSITION_TETRIS)
-        self._afficherTexte(f"Niveau: {self.niveau}", POSITION_NIVEAU)
+        self._afficher_texte(f"Score: {self.score}", POSITION_SCORE)
+        self._afficher_texte(f"Pièces: {self.pieces}", POSITION_PIECES)
+        self._afficher_texte(f"Lignes: {self.lignes}", POSITION_LIGNES)
+        self._afficher_texte(f"Tetris: {self.tetris}", POSITION_TETRIS)
+        self._afficher_texte(f"Niveau: {self.niveau}", POSITION_NIVEAU)
         self._rendre()
 
     def play(self) -> None:
