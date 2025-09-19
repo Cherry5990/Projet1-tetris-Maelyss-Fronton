@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
 """
 [Ce bloc est la documentation du module]
 Un Tetris avec Pygame.
@@ -33,15 +32,19 @@ from constantes import TAILLE_FONT_DEFAUT
 from constantes import TAILLE_FONT_TITRE
 from constantes import HAUTEUR_POSITION_TEXTE_SCORE
 
-TAILLE_PLATEAU = tuple([constantes.DIM_PLATEAU[i]*constantes.TAILLE_BLOC[i] for i in range(2)])
-TAILLE_PLABORD = tuple([constantes.DIM_PLATEAU[i]*constantes.TAILLE_BLOC[i]+constantes.BORDURE_PLATEAU*2 for i in range(2)])
+TAILLE_PLATEAU = tuple([constantes.DIM_PLATEAU[i] * constantes.TAILLE_BLOC[i] for i in range(2)])
+TAILLE_PLABORD = tuple(
+    [constantes.DIM_PLATEAU[i] * constantes.TAILLE_BLOC[i] + constantes.BORDURE_PLATEAU * 2 for i in range(2)])
 
-MARGE = tuple([constantes.TAILLE_FENETRE[i]-TAILLE_PLATEAU[i]- constantes.BORDURE_PLATEAU*2 for i in range(2)])
-START_PLATEAU = int(MARGE[0]/2), MARGE[1]+2*constantes.BORDURE_PLATEAU
-START_PLABORD = int(MARGE[0]/2)-constantes.BORDURE_PLATEAU, MARGE[1]+constantes.BORDURE_PLATEAU
+MARGE = tuple([
+    constantes.TAILLE_FENETRE[i] - TAILLE_PLATEAU[i] - constantes.BORDURE_PLATEAU * 2
+    for i in range(2)
+])
+START_PLATEAU = int(MARGE[0] / 2), MARGE[1] + 2 * constantes.BORDURE_PLATEAU
+START_PLABORD = int(MARGE[0] / 2) - constantes.BORDURE_PLATEAU, MARGE[1] + constantes.BORDURE_PLATEAU
 
-CENTRE_FENETRE = tuple([constantes.TAILLE_FENETRE[i]/2 for i in range(2)])
-POS = CENTRE_FENETRE[0], CENTRE_FENETRE[1]+100
+CENTRE_FENETRE = tuple([constantes.TAILLE_FENETRE[i] / 2 for i in range(2)])
+POS = CENTRE_FENETRE[0], CENTRE_FENETRE[1] + 100
 POSITION_SCORE = constantes.TAILLE_FENETRE[0] - START_PLABORD[0] / 2, HAUTEUR_POSITION_TEXTE_SCORE
 POSITION_PIECES = POSITION_SCORE[0], HAUTEUR_POSITION_TEXTE_SCORE + 30
 POSITION_LIGNES = POSITION_SCORE[0], HAUTEUR_POSITION_TEXTE_SCORE + 60
@@ -51,7 +54,8 @@ POSITION_NIVEAU = POSITION_SCORE[0], HAUTEUR_POSITION_TEXTE_SCORE + 120
 for name, rotations in PIECES.items():
 	PIECES[name] = [[[int(i) for i in pixel] for pixel in rotation.splitlines()] for rotation in rotations]
 
-PIECES_KEYS = list(PIECES.keys()) # On récupère le nom associé à chaque pièce
+PIECES_KEYS = list(PIECES.keys())
+
 
 # Classe Tetris
 class Jeu:
@@ -108,7 +112,7 @@ class Jeu:
 			font (str, optional): La font du texte. Defaults to 'defaut'.
 		"""
 		font = self.fonts.get(font, self.fonts['defaut'])
-		couleur=COULEURS.get(couleur, COULEURS[9]) # Renvoie la couleur n°9 par défaut si paramètre donné non valide
+		couleur = COULEURS.get(couleur, COULEURS[9]) # Renvoie la couleur n°9 par défaut si paramètre donné non valide
 		rendu = font.render(text, True, couleur)
 		rect = rendu.get_rect()
 		rect.center = position
@@ -173,7 +177,7 @@ class Jeu:
 		for num_ligne, ligne in enumerate(rep_piece):
 			for num_pixel, pixel in enumerate(ligne):
 				if pixel != 0:
-					coords.append([num_ligne+self.position[0], num_pixel+self.position[1]])
+					coords.append([num_ligne + self.position[0], num_pixel + self.position[1]])
 		self.coordonnees = coords
 	def _est_valide(self, x:int=0, y:int=0, r:int=0) -> bool:
 		"""Renvoie True si la pièce actuelle décalée selon les paramètres donnés ne dépasse pas du plateau, False sinon
@@ -190,12 +194,13 @@ class Jeu:
 		if r == 0: # si la pièce n'a pas été tournée
 			coordonnees = self.coordonnees
 		else:
-			rep_piece=self.current[(self.position[2]+r)%len(self.current)]
+			rep_piece = self.current[(self.position[2] + r) % len(self.current)]
 			coords = []
 			for num_ligne, ligne in enumerate(rep_piece):
 				for num_pixel, pixel in enumerate(ligne):
 					if pixel != 0:
-						coords.append([num_ligne+self.position[0], num_pixel+self.position[1]])
+						coords.append(
+							[num_ligne + self.position[0], num_pixel + self.position[1]])
 			coordonnees = coords
 #			print("Rotation testée: %s" % coordonnees)
 		for coord_x, coord_y in coordonnees:
@@ -208,7 +213,7 @@ class Jeu:
 #				print("Non valide en Y: cy=%s, y=%s" % (cy, y))
 				return False
 			else:
-				if self.plateau[coord_y+y][coord_x+x] != 0:
+				if self.plateau[coord_y + y][coord_x + x] != 0:
 #					print("Position occupée sur le plateau")
 					return False
 #		print("Position testée valide: x=%s, y=%s" % (x, y))
@@ -232,8 +237,8 @@ class Jeu:
 					break
 			else:
 				print(self.plateau)
-				print(">>> %s" % (constantes.DIM_PLATEAU[1]-1-i))
-				completees.append(constantes.DIM_PLATEAU[1]-1-i)
+				print(">>> %s" % (constantes.DIM_PLATEAU[1] - 1 - i))
+				completees.append(constantes.DIM_PLATEAU[1] - 1 - i)
 		lignes = len(completees)
 		for ligne_completee in completees:
 			self.plateau.pop(ligne_completee)
@@ -244,7 +249,7 @@ class Jeu:
 		self.score += lignes * self.niveau
 		self.niveau = int(self.lignes / NB_LIGNES_POUR_NIVEAU) + 1
 		if lignes >= NB_LIGNES_POUR_TETRIS:
-			self.tetris +=1
+			self.tetris += 1
 			self.score += self.niveau * self.tetris
 		# Travail avec la pièce courante terminé
 		self.current = None
@@ -260,7 +265,7 @@ class Jeu:
 		print("Piece suivante")
 		self.current, self.next = self.next, self._get_piece()
 		self.pieces += 1
-		self.position = [int(constantes.DIM_PLATEAU[0] / 2)-2, HAUTEUR_APPARITION_PIECES, 0]
+		self.position = [int(constantes.DIM_PLATEAU[0] / 2) - 2, HAUTEUR_APPARITION_PIECES, 0]
 		self._calculer_donnees_piece_courante()
 		self.dernier_mouvement = self.derniere_chute = time.time()
 		print(self.current)
@@ -291,16 +296,17 @@ class Jeu:
 		elif event == K_UP:
 			print("Mouvement de rotation")
 			if self._est_valide(r=1):
-				self.position[2] = (self.position[2] + 1) %len(self.current)
+				self.position[2] = (self.position[2] + 1) % len(self.current)
 		elif event == K_SPACE:
-			print("Mouvement de chute %s / %s" % (self.position, self.coordonnees))
-			if self.position[1] <=0:
+			print("Mouvement de chute %s / %s" % 
+		 		(self.position, self.coordonnees))
+			if self.position[1] <= 0:
 				self.position[1] = 1
 				self._calculer_donnees_piece_courante()
 			hauteur_de_chute = 0
-			while self._est_valide(y=hauteur_de_chute):
-				hauteur_de_chute+=1
-			self.position[1] += hauteur_de_chute-1
+			while self._est_valide(y = hauteur_de_chute):
+				hauteur_de_chute += 1
+			self.position[1] += hauteur_de_chute - 1
 		self._calculer_donnees_piece_courante()
 	def _gerer_gravite(self)->None:
 		"""Fait tomber la pièce sur le plateau
@@ -323,38 +329,47 @@ class Jeu:
 		"""Dessine le plateau et les pièces posées dessus
 		"""
 		self.surface.fill(COULEURS.get(0))
-		pygame.draw.rect(self.surface, COULEURS[8], START_PLABORD+TAILLE_PLABORD, constantes.BORDURE_PLATEAU)
+		pygame.draw.rect(self.surface, COULEURS[8],
+				   		 START_PLABORD + TAILLE_PLABORD, constantes.BORDURE_PLATEAU)
 		for num_ligne, ligne in enumerate(self.plateau):
 			for num_case, case in enumerate(ligne):
 				couleur = COULEURS[case]
 				position = num_case, num_ligne
-				coordonnees = tuple([START_PLATEAU[k] + position[k] * constantes.TAILLE_BLOC[k] for k in range(2)])
-				pygame.draw.rect(self.surface, couleur, coordonnees + constantes.TAILLE_BLOC)
+				coordonnees = tuple([
+					START_PLATEAU[k] + position[k] * constantes.TAILLE_BLOC[k] 
+					for k in range(2)
+				])
+				pygame.draw.rect(self.surface, couleur,
+					 			 coordonnees + constantes.TAILLE_BLOC)
 		if self.current is not None:
 			for position in self.coordonnees:
 				couleur = COULEURS.get(self._get_current_piece_color())
-				coordonnees = tuple([START_PLATEAU[k] + position[k] * constantes.TAILLE_BLOC[k] for k in range(2)])
-				pygame.draw.rect(self.surface, couleur, coordonnees + constantes.TAILLE_BLOC)
-		self.score, self.pieces, self.lignes, self.tetris, self.niveau#TODO
+				coordonnees = tuple([
+					START_PLATEAU[k] + position[k] * constantes.TAILLE_BLOC[k]
+					for k in range(2)
+				])
+				pygame.draw.rect(self.surface, couleur, 
+					 			coordonnees + constantes.TAILLE_BLOC)
+		self.score, self.pieces, self.lignes, self.tetris, self.niveau		#TODO
 		self._afficher_texte('Score: >%s' % self.score, POSITION_SCORE)
 		self._afficher_texte('Pièces: %s' % self.pieces, POSITION_PIECES)
 		self._afficher_texte('Lignes: %s' % self.lignes, POSITION_LIGNES)
 		self._afficher_texte('Tetris: %s' % self.tetris, POSITION_TETRIS)
 		self._afficher_texte('Niveau: %s' % self.niveau, POSITION_NIVEAU)
+        self._rendre()
 
-		self._rendre()
-	def play(self)->None:
+    def play(self)->None:
 		"""Lance le jeu
 		"""
-		print("Jouer")
-		self.surface.fill(COULEURS.get(0))
-		self._first()
-		while not self.perdu:
-			if self.current is None:
-				self._next()
-			self._gerer_evenements()
-			self._gerer_gravite()
-			self._dessiner_plateau()
+        print("Jouer")
+        self.surface.fill(COULEURS.get(0))
+        self._first()
+        while not self.perdu:
+            if self.current is None:
+                self._next()
+            self._gerer_evenements()
+            self._gerer_gravite()
+            self._dessiner_plateau()
 
 if __name__ == '__main__':
 	jeu = Jeu()
