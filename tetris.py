@@ -356,20 +356,20 @@ class Jeu:
 		self._afficher_texte('Lignes: %s' % self.lignes, POSITION_LIGNES)
 		self._afficher_texte('Tetris: %s' % self.tetris, POSITION_TETRIS)
 		self._afficher_texte('Niveau: %s' % self.niveau, POSITION_NIVEAU)
-        self._rendre()
+		self._rendre()
 
-    def play(self)->None:
+	def play(self)->None:
 		"""Lance le jeu
 		"""
-        print("Jouer")
-        self.surface.fill(COULEURS.get(0))
-        self._first()
-        while not self.perdu:
-            if self.current is None:
-                self._next()
-            self._gerer_evenements()
-            self._gerer_gravite()
-            self._dessiner_plateau()
+		print("Jouer")
+		self.surface.fill(COULEURS.get(0))
+		self._first()
+		while not self.perdu:
+			if self.current is None:
+				self._next()
+			self._gerer_evenements()
+			self._gerer_gravite()
+			self._dessiner_plateau()
 
 if __name__ == '__main__':
 	jeu = Jeu()
